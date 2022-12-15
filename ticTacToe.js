@@ -92,8 +92,6 @@ function ticTacToe(arr) {
     }
   };
 
-  const startGame = () => {};
-
   while (arr[0] !== undefined) {
     let [row, column] = arr.shift().split(' ').map(Number);
 
