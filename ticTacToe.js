@@ -92,49 +92,38 @@ function ticTacToe(arr) {
     }
   };
 
+  const startGame = () => {};
+
   while (arr[0] !== undefined) {
     let [row, column] = arr.shift().split(' ').map(Number);
+
+    if (gameEnd(dashboard)) {
+      console.log('The game ended! Nobody wins :(');
+      printMatrix(dashboard);
+      break;
+    }
+
+    if (alreadyTakenPlace(row, column, dashboard)) {
+      console.log('This place is already taken. Please choose another!');
+      continue;
+    }
+
     if (firstTurn) {
-      if (gameEnd(dashboard)) {
-        console.log('The game ended! Nobody wins :(');
-        printMatrix(dashboard);
-        break;
-      }
-      if (alreadyTakenPlace(row, column, dashboard)) {
-        console.log('This place is already taken. Please choose another!');
-        continue;
-      } else {
-        dashboard[row][column] = firstPlayer;
-        firstTurn = false;
-        secondTurn = true;
-      }
-
-      if (gameWin(dashboard)) {
-        console.log(`Player ${firstPlayer} wins!`);
-        printMatrix(dashboard);
-        break;
-      }
+      dashboard[row][column] = firstPlayer;
+      firstTurn = false;
+      secondTurn = true;
     } else if (secondTurn) {
-      if (gameEnd(dashboard)) {
-        console.log('The game ended! Nobody wins :(');
-        printMatrix(dashboard);
-        break;
-      }
+      dashboard[row][column] = secondPlayer;
+      firstTurn = true;
+      secondTurn = false;
+    }
 
-      if (alreadyTakenPlace(row, column, dashboard)) {
-        console.log('This place is already taken. Please choose another!');
-        continue;
-      } else {
-        dashboard[row][column] = secondPlayer;
-        firstTurn = true;
-        secondTurn = false;
-      }
-
-      if (gameWin(dashboard)) {
-        console.log(`Player ${secondPlayer} wins!`);
-        printMatrix(dashboard);
-        break;
-      }
+    if (gameWin(dashboard)) {
+      firstTurn
+        ? console.log(`Player ${secondPlayer} wins!`)
+        : console.log(`Player ${firstPlayer} wins!`);
+      printMatrix(dashboard);
+      break;
     }
   }
 }
