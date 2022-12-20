@@ -95,12 +95,6 @@ function ticTacToe(arr) {
   while (arr[0] !== undefined) {
     let [row, column] = arr.shift().split(' ').map(Number);
 
-    if (gameEnd(dashboard)) {
-      console.log('The game ended! Nobody wins :(');
-      printMatrix(dashboard);
-      break;
-    }
-
     if (alreadyTakenPlace(row, column, dashboard)) {
       console.log('This place is already taken. Please choose another!');
       continue;
@@ -120,6 +114,12 @@ function ticTacToe(arr) {
       firstTurn
         ? console.log(`Player ${secondPlayer} wins!`)
         : console.log(`Player ${firstPlayer} wins!`);
+      printMatrix(dashboard);
+      break;
+    }
+
+    if (gameEnd(dashboard)) {
+      console.log('The game ended! Nobody wins :(');
       printMatrix(dashboard);
       break;
     }

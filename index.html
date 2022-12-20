@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>FromJSONToHTMLTable</title>
+
+    <style>
+      table,
+      th {
+        border: groove;
+
+        border-collapse: collapse;
+      }
+
+      td {
+        border: 1px solid black;
+      }
+
+      td,
+      th {
+        padding: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="wrapper"></div>
+
+    <script>
+      function fromJSONToHTMLTable(input) {
+        //Write your code here
+        let objectInfo = JSON.parse(input);
+        let resultArray = [];
+
+        function replace(value) {
+          return value.toString().replace('<', '&lt;').replace('>', '&gt;');
+        }
+
+        let result = '<table>';
+        resultArray.push(result);
+        console.log(result);
+
+        let currentObjectKeys = Object.keys(objectInfo[0]);
+        result = '   <tr>';
+        for (let j of currentObjectKeys) {
+          result += `<th>${replace(j)}</th>`;
+        }
+        result += '</tr>';
+        console.log(result);
+        resultArray.push(result);
+        result = '';
+
+        for (let i of objectInfo) {
+          let currentObjectValues = Object.values(i);
+          result = '   <tr>';
+          for (let k of currentObjectValues) {
+            result += `<td>${replace(k)}</td>`;
+          }
+          result += '</tr>';
+          console.log(result);
+          resultArray.push(result);
+          result = '';
+        }
+        console.log('</table>');
+        resultArray.push(result);
+
+        return resultArray.join('\n');
+      }
+
+      window.onload = function () {
+        let container = document.getElementById('wrapper');
+
+        container.innerHTML = fromJSONToHTMLTable([
+          '[{"Name":"Stamat","Price":5.5},{"Name":"Rumen","Price":6}]',
+        ]);
+      };
+    </script>
+  </body>
+</html>
