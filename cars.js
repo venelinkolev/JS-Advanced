@@ -3,23 +3,26 @@ function cars(arr) {
 
   const closure = {
     create: (name, inherits, name2) => {
-      //(object[name] = inherits ? Object.create(object[name2]) : {}),
-
       if (inherits === undefined) {
         object[name] = {};
       } else {
-        //debugger;
-        object[name] = Object.create(object[name2]);
-        //debugger;
-        //object[name] = newObj;
-      }
+        const newObj = Object.create(object[name2]);
 
-      // console.log(nameOne, inherit, nameTwo);
+        object[name] = newObj;
+      }
     },
     set: (name, key, value) => {
       object[name][key] = value;
     },
-    print: (name) => { },
+    print: (name) => {
+      const result = [];
+
+      for (let key in object[name]) {
+        result.push(`${key}:${object[name][key]}`);
+      }
+
+      console.log(result.join(','));
+    },
   };
 
   arr.forEach((element) => {
@@ -27,33 +30,8 @@ function cars(arr) {
 
     closure[command](name, key, value);
   });
-
-  console.log(object);
 }
 
-/*
-function cars(input) {
-
-  const data = {};
-
-  const result = {
-      create: (name, inherits, name2) => (data[name] = inherits ? Object.create(data[name2]) : {}),
-      set: (name, key, value) => (data[name][key] = value),
-      print: (name) => {
-          const entry = [];
-          for (const key in data[name]) {
-              entry.push(`${key}:${data[name][key]}`);
-          }
-          console.log(entry.join(","));
-      },
-  };
-debugger;
-  input.forEach((line) => {
-      const [command, name, key, value] = line.split(" ");
-      result[command](name, key, value);
-  });
-}
-*/
 cars([
   'create c1',
   'create c2 inherit c1',
