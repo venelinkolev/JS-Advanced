@@ -1,21 +1,18 @@
 function fibonacci() {
-    let number = 0;
-    let lastNumber = ;
+  let number = 0;
+  let lastNumber = 0;
+  let temp = 1;
+  debugger;
+  return () => {
+    number += temp;
+    temp = lastNumber;
+    lastNumber = number;
 
-  return function fib() {
     if (number < 1) {
-      number++;
       return 1;
     } else if (number < 2) {
-      number++;
       return 1;
-    } else if (number == 2) {
-      number++;
-      return 2;
     }
-
-    number += lastNumber;
-    lastNumber = number;
     return number;
   };
 }
