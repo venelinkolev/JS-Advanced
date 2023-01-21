@@ -1,6 +1,6 @@
 function fibonacci() {
-    let number = 0;
-    let lastNumber = ;
+  let number = 0;
+  let lastNumber = 0;
 
   return function fib() {
     if (number < 1) {
