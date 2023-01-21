@@ -1,13 +1,20 @@
 function fibonacci() {
   let number = 0;
   let lastNumber = 0;
+  let temp = 1;
+  debugger;
+  return () => {
+    number += temp;
+    temp = lastNumber;
+    lastNumber = number;
 
-  if (number < 1) {
-    return 1;
-  } else if (number < 2) {
-    return 1;
-  }
-  return number;
+    if (number < 1) {
+      return 1;
+    } else if (number < 2) {
+      return 1;
+    }
+    return number;
+  };
 }
 
 let fib = fibonacci();
