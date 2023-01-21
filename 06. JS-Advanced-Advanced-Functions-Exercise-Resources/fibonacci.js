@@ -2,22 +2,12 @@ function fibonacci() {
   let number = 0;
   let lastNumber = 0;
 
-  return function fib() {
-    if (number < 1) {
-      number++;
-      return 1;
-    } else if (number < 2) {
-      number++;
-      return 1;
-    } else if (number == 2) {
-      number++;
-      return 2;
-    }
-
-    number += lastNumber;
-    lastNumber = number;
-    return number;
-  };
+  if (number < 1) {
+    return 1;
+  } else if (number < 2) {
+    return 1;
+  }
+  return number;
 }
 
 let fib = fibonacci();
