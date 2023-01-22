@@ -24,6 +24,7 @@ turkey - made with 10 protein, 10 carbohydrate, 10 fat and 10 flavour
 
   // console.log(apple);
 
+
   const recipes = {
     apple: {
       carbohydrate: 1,
@@ -51,10 +52,8 @@ turkey - made with 10 protein, 10 carbohydrate, 10 fat and 10 flavour
     },
   };
 
-  console.log(recipes);
-  // recipes.push(apple, lemonade, burger, eggs, turkey);
+  //console.log(recipes);
 
-  //console.log(turkey);
   const stored = {
     protein: 0,
     carbohydrate: 0,
@@ -75,46 +74,53 @@ report - returns information about the stored microelements, in the order descri
     },
 
     prepare: (recipe, quantity) => {
-      let currentRecipe = Object.entries(recipes).find(
-        (el) => el[0] === recipe
-      );
-      //let currentRecipeQuantity = Object.entries(currentRecipe[1]);
+      quantity = Number(quantity);
+      let currentRecipe = Object.entries(recipes[recipe])
+      // Object.entries(recipes).find(
+      //   (el) => el[0] === recipe
+      //);
 
-      // currentRecipeQuantity.forEach((line) => {
-      //   line[1] = Number(line[1]) * quantity;
-      // });
-      for (let key in currentRecipe[1]) {
-        let microelement = currentRecipe[1][key];
-        microelement *= quantity;
-      }
 
-      let currentMicroelementValue = 0;
-      let microelementValue = 0;
-      let currentMicroelement = '';
-      let isEnough = true;
-      for (let key in currentRecipe[1]) {
-        currentMicroelementValue = stored[key];
-        microelementValue = currentRecipe[1][key];
+      // for (let key in currentRecipe[1]) {
+      //   currentRecipe[1][key] *= quantity;
+      // }
 
-        if (currentMicroelementValue - microelementValue < 0) {
-          isEnough = false;
-          currentMicroelement = key;
-          break;
-        }
-      }
+      currentRecipe.forEach((el) => el[1] *= quantity); 
 
-      if (!isEnough) {
-        return `Error: not enough ${currentMicroelement} in stock`;
-      } else {
-        for (let key in stored) {
-          stored[key] -= currentRecipe[1][key];
-        }
-        return 'Success';
-      }
-      //return currentRecipe[1];
+      for (let i of currentRecipe) {
+        if (stored[i[0]] - i[1] < 0) return `Error: not enough ${i[0]} in stock`;
+      };
+
+      currentRecipe.forEach((el) => {
+        stored[el[0]] -= el[1];
+      });
+      // let currentMicroelementValue = 0;
+      // let microelementValue = 0;
+
+      // for (let key in currentRecipe[1]) {
+      //   currentMicroelementValue = stored[key];
+      //   microelementValue = currentRecipe[1][key];
+
+      //   if (currentMicroelementValue - microelementValue < 0) {
+      //     return `Error: not enough ${key} in stock`;
+      //   }
+      // }
+
+      // for (let key in currentRecipe[1]) {
+      //   stored[key] -= currentRecipe[1][key];
+      // }
+      return 'Success';
     },
 
-    report: () => {},
+    report: () => {
+      //protein={qty} carbohydrate={qty} fat={qty} flavour={qty}
+      let buffer = [];
+      for (let key in stored) {
+        buffer.push(`${key}=${stored[key]}`)
+      }
+
+      return buffer.join(' ');
+    },
   };
 
   return (manager) => {
@@ -122,9 +128,8 @@ report - returns information about the stored microelements, in the order descri
 
     return command[currentCommand](element, quantity);
   };
-  //console.log(apple.carbohydrate);
 }
-
+debugger;
 let manager = breakfastRobot();
 console.log(manager('prepare turkey 1'));
 console.log(manager('restock protein 10'));
@@ -136,3 +141,17 @@ console.log(manager('prepare turkey 1'));
 console.log(manager('restock flavour 10'));
 console.log(manager('prepare turkey 1'));
 console.log(manager('report'));
+
+console.log('-------------------------')
+
+debugger;
+let man = breakfastRobot();
+console.log(man('restock flavour 50'));
+console.log(man('prepare lemonade 4'));
+console.log(man('restock carbohydrate 10'));
+console.log(man('restock flavour 10'));
+console.log(man('prepare apple 1'));
+console.log(man('prepare apple 2'));
+console.log(man('restock fat 10'));
+console.log(man('prepare burger 1'));
+console.log(man('report'));
