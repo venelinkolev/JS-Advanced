@@ -52,24 +52,21 @@ function solve(event) {
       function buttons(event) {
         debugger;
         if (event.target.textContent == 'Start') {
-          if (
-            event.target.parentElement.parentElement.parentElement.id ===
-            'in-progress'
-          ) {
-            complete.appendChild(event.target.parentElement.parentElement);
-          } else {
-            inProgress.appendChild(event.target.parentElement.parentElement);
-            console.log('Start');
-          }
-
-          if (event.target.textContent == 'Delete') {
-            event.target.parentElement.parentElement.remove();
-            console.log('Delete');
-          }
-          if (event.target.textContent == 'Finish') {
-            console.log('Finish');
-          }
+          inProgress.appendChild(article);
+          buttonStart.remove();
+          console.log('Start');
+          return;
         }
+        if (event.target.textContent == 'Delete') {
+          article.remove();
+          console.log('Delete');
+          return;
+        }
+        if (event.target.textContent == 'Finish') {
+          console.log('Finish');
+          return;
+        }
+        return;
       }
     }
   }
