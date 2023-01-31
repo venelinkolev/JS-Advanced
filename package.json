@@ -1,0 +1,23 @@
+{
+  "name": "my-testing",
+  "version": "1.0.0",
+  "description": "Solutions to problems from a preparatory course of JS - SoftIni",
+  "main": "add.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/venelinkolev/JS-Advanced.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/venelinkolev/JS-Advanced/issues"
+  },
+  "homepage": "https://github.com/venelinkolev/JS-Advanced#readme",
+  "dependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
+  }
+}
