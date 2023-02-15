@@ -12,6 +12,7 @@ function solve() {
   const tbody = document.getElementById('tbody');
   const sum = document.getElementById('sum');
   let totalSum = 0;
+  let fields = [];
 
   function addWorker(event) {
     event.preventDefault();
@@ -25,15 +26,6 @@ function solve() {
       salary.value == ''
     )
       return;
-
-    let fields = [
-      firstName.value,
-      lastName.value,
-      email.value,
-      birth.value,
-      position.value,
-      salary.value,
-    ];
 
     let tr = document.createElement('tr');
 
@@ -75,8 +67,9 @@ function solve() {
 
     tbody.appendChild(tr);
 
-    let currentSum = Number(salary.value);
-    totalSum += currentSum;
+    sum.textContent = (Number(sum.textContent) + Number(salary.value)).toFixed(
+      2
+    );
 
     firstName.value = '';
     lastName.value = '';
@@ -85,13 +78,48 @@ function solve() {
     position.value = '';
     salary.value = '';
 
-    sum.textContent = totalSum.toFixed(2);
+    function firedFunc(event) {
+      debugger;
+      let parent = event.target.parentElement.parentElement;
 
-    function firedFunc() {
+      Array.from(parent.querySelectorAll('td')).forEach((element) => {
+        fields.push(element.textContent);
+      });
+
+      parent.remove();
+
+      sum.textContent = (Number(sum.textContent) - Number(fields[5])).toFixed(
+        2
+      );
+
+      fields = [];
+
       console.log('Fired');
     }
 
-    function editFunc() {
+    function editFunc(event) {
+      let parent = event.target.parentElement.parentElement;
+      Array.from(parent.querySelectorAll('td')).forEach((element) => {
+        fields.push(element.textContent);
+      });
+
+      firstName.value = fields[0];
+      lastName.value = fields[1];
+      email.value = fields[2];
+      birth.value = fields[3];
+      position.value = fields[4];
+      salary.value = fields[5];
+
+      parent.remove();
+
+      sum.textContent = (Number(sum.textContent) - Number(fields[5])).toFixed(
+        2
+      );
+
+      fields = [];
+
+      //debugger;
+
       console.log('Edit');
     }
 
