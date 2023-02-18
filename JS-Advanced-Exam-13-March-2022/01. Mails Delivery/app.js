@@ -12,21 +12,28 @@ function solve() {
 
   const reset = document.getElementById('reset');
 
+  reset.addEventListener('click', (event) => {
+    event.preventDefault();
+    resetFunc();
+  });
+
+  function resetFunc() {
+    recipientName.value = '';
+    title.value = '';
+    message.value = '';
+
+    console.log('Reset');
+  }
+
   function addListFunc(event) {
     event.preventDefault();
 
-    function resetFunc(event) {
-      event.preventDefault();
-      recipientName.value = '';
-      title.value = '';
-      message.value = '';
-
-      console.log('Reset');
-    }
-    reset.addEventListener('click', resetFunc);
-
     if (recipientName.value == '' || title.value == '' || message.value == '')
       return;
+
+    const nameValue = recipientName.value;
+    const titleValue = title.value;
+    const messageValue = message.value;
 
     let li = document.createElement('li');
 
@@ -47,7 +54,7 @@ function solve() {
 
     let deleteBtn = document.createElement('button');
     deleteBtn.setAttribute('type', 'submit');
-    sendBtn.setAttribute('id', 'delete');
+    deleteBtn.setAttribute('id', 'delete');
     deleteBtn.textContent = 'Delete';
     deleteBtn.addEventListener('click', deleteFunc);
 
@@ -61,83 +68,50 @@ function solve() {
 
     list.appendChild(li);
 
-    recipientName.value = '';
-    title.value = '';
-    message.value = '';
+    resetFunc();
 
-    let divsend = document.createElement('div');
-    function sendFunc(event) {
-      debugger;
-      let feilds = Array.from(
-        event.target.parentElement.parentElement.querySelectorAll('h4')
-      );
+    let liSend = document.createElement('li');
 
-      let textArray = [];
-      feilds.forEach((element) => {
-        let current = element.textContent.split(' ');
-        textArray.push(current[current.length - 1]);
-      });
-
-      console.log(textArray);
-
+    function sendFunc() {
       li.remove();
 
-      li = document.createElement('li');
-
       let spanTo = document.createElement('span');
-      spanTo.textContent = `To: ${textArray[1]}`;
+      spanTo.textContent = `To: ${nameValue}`;
       let spanTitle = document.createElement('span');
-      spanTitle.textContent = `Title: ${textArray[0]}`;
-      divsend.setAttribute('class', 'btn');
+      spanTitle.textContent = `Title: ${titleValue}`;
+
+      let divSend = document.createElement('div');
+      divSend.setAttribute('class', 'btn');
+      deleteBtn.getAttribute('id');
       deleteBtn.setAttribute('class', 'delete');
-      divsend.appendChild(deleteBtn);
 
-      li.appendChild(spanTo);
-      li.appendChild(spanTitle);
-      li.appendChild(divsend);
+      divSend.appendChild(deleteBtn);
 
-      sentList.appendChild(li);
+      liSend.appendChild(spanTo);
+      liSend.appendChild(spanTitle);
+      liSend.appendChild(divSend);
+
+      sentList.appendChild(liSend);
 
       console.log('Send');
     }
 
     function deleteFunc(event) {
-      debugger;
-      if (event.target.parentElement.id == 'list-action') {
-        let feilds = Array.from(
-          event.target.parentElement.parentElement.querySelectorAll('h4')
-        );
+      li.remove();
 
-        let textArray = [];
-        feilds.forEach((element) => {
-          let current = element.textContent.split(' ');
-          textArray.push(current[current.length - 1]);
-        });
+      let liDelete = document.createElement('li');
 
-        console.log(textArray);
+      let spanTo = document.createElement('span');
+      spanTo.textContent = `To: ${nameValue}`;
+      let spanTitle = document.createElement('span');
+      spanTitle.textContent = `Title: ${titleValue}`;
 
-        li.remove();
+      liDelete.appendChild(spanTo);
+      liDelete.appendChild(spanTitle);
 
-        li = document.createElement('li');
+      deleteList.appendChild(liDelete);
 
-        let spanTo = document.createElement('span');
-        spanTo.textContent = `To: ${textArray[1]}`;
-        let spanTitle = document.createElement('span');
-        spanTitle.textContent = `Title: ${textArray[0]}`;
-        //   let divsend = document.createElement('div');
-        //   divsend.setAttribute('class', 'btn');
-        //   deleteBtn.setAttribute('class', 'delete');
-        //   divsend.appendChild(deleteBtn);
-
-        li.appendChild(spanTo);
-        li.appendChild(spanTitle);
-        //li.appendChild(divsend);
-
-        deleteList.appendChild(li);
-      } else {
-        divsend.remove();
-        deleteList.appendChild(li);
-      }
+      liSend.remove();
 
       console.log('Delete');
     }
